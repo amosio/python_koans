@@ -21,10 +21,16 @@ def is_positive(a):
         return False
     return True
 
+def is_triangle_possible(a,b,c):
+    if (a >= b + c) or (b >= a + c) or (c >= a + b):
+       	return False
+    return True
+
 
 def triangle(a, b, c):
-    # DELETE 'PASS' AND WRITE THIS CODE
     if (not is_positive(a) or not is_positive(b) or not is_positive(c)):
+        raise TriangleError
+    if not is_triangle_possible(a, b, c):
         raise TriangleError
     # if not is_positive(a):
     #     raise TriangleError
