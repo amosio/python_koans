@@ -33,16 +33,6 @@ from runner.koan import *
 # Your goal is to write the score method.
 
 
-def my_count(dices):
-    count_results = {}
-    for dice in dices:
-        if dice not in count_results:
-            count_results[dice] = 1
-        else:
-            count_results[dice] += 1
-    return count_results
-
-
 def score(dices):
     THREE_ONES = 1000
     THREE_SAME_NOT_ONES = 100
@@ -50,19 +40,51 @@ def score(dices):
     EXTRA_FIVE = 50
 
     score = 0
-    counted_dices = my_count(dices)
+
+    if type(dices) is not list:
+        return score
+
+    if not dices:
+        return score
+
+    def my_count(dices):
+        count_results = {}
+        if not dices:
+            return count_results
+        for dice in dices:
+            if dice not in count_results:
+                count_results[dice] = 1
+            else:
+                count_results[dice] += 1
+        return count_results
 
     def reduce_threes(numbers, score_gain, counted_dices):
         score = 0
         for n in numbers:
-            if counted_dices[n] >= 3:
+            if n in counted_dices and counted_dices[n] >= 3:
                 score += (score_gain * n)
-            counted_dices[n] -= 3
+                counted_dices[n] -= 3
         return (score, counted_dices)
 
-    score, counted_dices = reduce_threes([1], THREE_ONES, counted_dices)
-    score, counted_dices = reduce_threes(
+    def reduce_ones(number, score_gain, counted_dices):
+        score = 0
+        if number in counted_dices:
+            score += score_gain * counted_dices[number]
+        return score
+
+    counted_dices = my_count(dices)
+
+    score_to_add, counted_dices = reduce_threes([1], THREE_ONES, counted_dices)
+    score += score_to_add
+    score_to_add, counted_dices = reduce_threes(
         list(range(2, 7)), THREE_SAME_NOT_ONES, counted_dices)
+    score += score_to_add
+    score_to_add = reduce_ones(1, EXTRA_ONE, counted_dices)
+    score += score_to_add
+    score_to_add = reduce_ones(5, EXTRA_FIVE, counted_dices)
+    score += score_to_add
+
+    return score
 
 
 class AboutScoringProject(Koan):
