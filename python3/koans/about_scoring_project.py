@@ -71,7 +71,8 @@ def score(dices):
         if number in counted_dices:
             score += score_gain * counted_dices[number]
         return score
-
+    
+    # @TODO use try exept:
     counted_dices = my_count(dices)
 
     score_to_add, counted_dices = reduce_threes([1], THREE_ONES, counted_dices)
