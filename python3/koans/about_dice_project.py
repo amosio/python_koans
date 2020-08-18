@@ -18,7 +18,10 @@ class DiceSet:
         # Needs implementing!
         # Tip: random.randint(min, max) can be used to generate random numbers
         # random
-        pass
+        res = []
+        for _ in range(n):
+            res.append(random.randint(1, 6))
+        self._values = res
 
 
 class AboutDiceProject(Koan):
