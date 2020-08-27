@@ -12,8 +12,35 @@
 
 from runner.koan import *
 
+from . import about_dice_project as adp
+from . import about_scoring_project as asp
+
+
 class AboutExtraCredit(Koan):
     # Write tests here. If you need extra test classes add them to the
     # test suite in runner/path_to_enlightenment.py
     def test_extra_credit_task(self):
         pass
+
+    class Game():
+        pass
+
+    class Player():
+        pass
+
+    class User():
+        pass
+
+    class AI():
+        pass
+
+    def test_test(self):
+        dice = adp.DiceSet()
+        self.assertEqual(dice.values, None)
+
+    def test_dice_values_do_not_change_unless_explicitly_rolled(self):
+        dice = adp.DiceSet()
+        dice.roll(5)
+        first_time = dice.values
+        second_time = dice.values
+        self.assertEqual(first_time, second_time)
